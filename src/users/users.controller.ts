@@ -46,6 +46,12 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Get('/name/:userName')
+  getUserByUserName(@Param('userName') userName: string) {
+    console.log(userName);
+    return this.usersService.getUserByUserName(userName);
+  }
+
   @Patch(':id')
   @UseInterceptors(UserInterceptor)
   update(
