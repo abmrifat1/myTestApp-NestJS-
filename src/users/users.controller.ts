@@ -11,12 +11,17 @@ import {
   UseFilters,
   UnauthorizedException,
   UseGuards,
+  UseInterceptors,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserCustomExceptionFilter } from './user.exception.filter';
 import { UserGuard } from './user.guard';
+import { UserInterceptor } from './user.interceptor';
+import { Request, Response } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -42,8 +47,18 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @UseInterceptors(UserInterceptor)
+  update(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) updateUserDto: UpdateUserDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const updatedUser = this.usersService.update(+id, updateUserDto);
+    return {
+      updatedUser: updatedUser,
+      request: res.json(req.body),
+    };
   }
 
   @Delete(':id')
