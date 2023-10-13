@@ -5,30 +5,29 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public users: User[] = [
     {
       id: 1001,
-      name: 'one',
+      userName: 'one',
       email: 'one@gmail.com',
       password: 'onepassword',
     },
     {
       id: 1002,
-      name: 'two',
+      userName: 'two',
       email: 'two@gmail.com',
       password: 'twopassword',
     },
     {
       id: 1003,
-      name: 'three',
+      userName: 'three',
       email: 'three@gmail.com',
       password: 'threepassword',
     },
   ];
 
   getUserByUserName(userName: string): User {
-    return this.users.find((el) => el.name === userName);
+    return this.users.find((el) => el.userName === userName);
   }
 
   create(createUserDto: CreateUserDto) {

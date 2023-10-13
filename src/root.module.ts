@@ -8,8 +8,4 @@ import { AuthModule } from './auth/auth.module';
   controllers: [RootController],
   providers: [],
 })
-export class RootModule {
-  constructor() {
-    console.log('Root Module');
-  }
-}
+export class RootModule {}
